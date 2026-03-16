@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // url = env("DATABASE_URL")
+}
+
+// model UserRoleEnum{
+//   USER USER
+//   ADMIN ADMIN
+// }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  phoneNumber String
+  // password String
+  // address String
+  // role USER
+  // orderedFoods Food[] 
+  }
+
+model Food{
+  id Int @id @default(autoincrement())
+  name String 
+  price Int
+  category FoodCategory @relation(fields:[foodCategoryId], references: [id])
+  foodCategoryId Int
+  foodOrderItems FoodOrderItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FoodCategory{
+  id Int @id @default(autoincrement())
+  name      String?
+  foods Food[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model FoodOrder{
+  id Int @id @default(autoincrement())
+  totalPrice String
+  status String
+  foodOrderItems FoodOrderItem[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FoodOrderItem{
+  id Int @id @default(autoincrement())
+  quantity Int
+  food Food @relation(fields:[foodId], references: [id])
+  foodId Int
+  order FoodOrder @relation(fields:[foodOrderId], references: [id])
+  foodOrderId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
