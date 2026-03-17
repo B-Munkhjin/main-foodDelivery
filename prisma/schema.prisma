@@ -7,16 +7,17 @@ datasource db {
   // url = env("DATABASE_URL")
 }
 
-// model UserRoleEnum{
-//   USER USER
-//   ADMIN ADMIN
-// }
+enum UserRoleEnum {
+  USER 
+  ADMIN 
+}
 
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   name      String?
   phoneNumber String
+  role UserRoleEnum @default(USER)
   // password String
   // address String
   // role USER
@@ -45,7 +46,7 @@ model FoodCategory{
 
 model FoodOrder{
   id Int @id @default(autoincrement())
-  totalPrice String
+  totalPrice Int
   status String
   foodOrderItems FoodOrderItem[]
   createdAt DateTime  @default(now())
