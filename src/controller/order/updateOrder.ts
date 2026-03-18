@@ -4,13 +4,13 @@ import { prisma } from "../../lib/prisma";
 export const updateOrder = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { totalPrice, status, foodOrderItems } = req.body;
-    await prisma.foodOrder.update({
+    const { status } = req.body;
+    const updatedOrder = await prisma.foodOrder.update({
       where: { id: Number(id) },
-      data: { totalPrice, foodOrderItems, status },
+      data: { status },
     });
-    res.status(200).send();
+    res.status(200).send(updatedOrder);
   } catch (error) {
-    res.status(400).json({ error: "update hiigdehgu bn???" });
+    res.status(400).json({ error });
   }
 };

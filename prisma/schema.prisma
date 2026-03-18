@@ -14,14 +14,16 @@ enum UserRoleEnum {
 
 model User {
   id        Int      @id @default(autoincrement())
+
   email     String   @unique
   name      String?
   phoneNumber String
   role UserRoleEnum @default(USER)
-  // password String
-  // address String
-  // role USER
-  // orderedFoods Food[] 
+
+  orders FoodOrder[]
+  password String
+  address String
+  isVerified Boolean?
   }
 
 model Food{
@@ -46,8 +48,11 @@ model FoodCategory{
 
 model FoodOrder{
   id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields:[userId], references: [id])
+
   totalPrice Int
-  status String
+  status FoodOrderStatusEnum @default(PENDING)
   foodOrderItems FoodOrderItem[]
   createdAt DateTime  @default(now())
   updatedAt DateTime @updatedAt
@@ -62,4 +67,10 @@ model FoodOrderItem{
   foodOrderId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum FoodOrderStatusEnum {
+  PENDING 
+  CANCELED
+  DELIVERED
 }

@@ -5,13 +5,14 @@ type FoodOrder = { foodId: number; quantity: number };
 
 type BodyType = {
   foods: FoodOrder[];
+  userId: number;
 };
 
 export const addOrder = async (req: Request, res: Response) => {
-  const { foods }: BodyType = req.body;
+  const { userId, foods }: BodyType = req.body;
 
   try {
-    const ids = foods.map((food) => food.foodId); /// hooloo id-gaar avah
+    const ids = foods.map((food) => food.foodId); /// hooloo id-gaar avah.... ali hool ve gedgee medne
     const getFoodIdArray = await prisma.food.findMany({
       where: {
         id: {
@@ -20,16 +21,19 @@ export const addOrder = async (req: Request, res: Response) => {
       },
     });
 
-    const totalPrice = foods.reduce((acc, item) => {
-      const food = getFoodIdArray.find((f) => f.id === item.foodId);
+    const totalPrice = foods.reduce((acc, curr) => {
+      const food = getFoodIdArray.find((f) => f.id === curr.foodId);
       if (!food) return acc;
-      return acc + food.price * item.quantity; ///total price nemj bn
+      return acc + food.price * curr.quantity; ///total price nemj bn
     }, 0);
 
     const order = await prisma.foodOrder.create({
       data: {
+        userId,
         totalPrice,
-        status: "pending",
+        foodOrderItems: {
+          create: foods,
+        },
       },
     });
 

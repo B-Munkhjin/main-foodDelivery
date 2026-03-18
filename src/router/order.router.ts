@@ -9,12 +9,12 @@ const router = express();
 
 router.get("/", getOrder);
 
-router.put("/:id", getOrderById);
+router.get("/:id", getOrderById);
 
 router.post("/", addOrder);
 
 router.delete("/:id", deleteOrder);
 
-router.put("/:id", updateOrder);
+router.patch("/:id", updateOrder);
 
 export default router;
