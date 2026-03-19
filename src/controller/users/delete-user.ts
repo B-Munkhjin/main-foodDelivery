@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
+import { error } from "node:console";
 
 export const deleteUser = async (req: Request, res: Response) => {
   try {
@@ -8,5 +9,6 @@ export const deleteUser = async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error) {
     res.status(400).json({ error: "ustgajij ustgana" });
+    console.error(error);
   }
 };
