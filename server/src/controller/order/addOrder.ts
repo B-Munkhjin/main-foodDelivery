@@ -9,7 +9,9 @@ type BodyType = {
 };
 
 export const addOrder = async (req: Request, res: Response) => {
-  const { userId, foods }: BodyType = req.body;
+  const userId = req.user?.userId!;
+
+  const { foods }: BodyType = req.body;
 
   try {
     const ids = foods.map((food) => food.foodId); /// hooloo id-gaar avah.... ali hool ve gedgee medne
