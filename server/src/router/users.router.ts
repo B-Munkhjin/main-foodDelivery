@@ -5,18 +5,20 @@ import { addUser } from "../controller/users/add-user";
 import { updateUser } from "../controller/users/update-user";
 import { deleteUser } from "../controller/users/delete-user";
 import { login } from "../controller/users/login";
+import { adminMiddleware } from "../middleware/admin-middleware";
+import { authMiddleware } from "../middleware/auth-middleware";
 
 const router = express();
 
-router.get("/", getUsers);
+router.get("/", authMiddleware, adminMiddleware, getUsers);
 
-router.get("/:id", getUserById);
+router.get("/:id", authMiddleware, getUserById);
 
 router.post("/", addUser);
 
-router.delete("/:id", deleteUser);
+router.delete("/:id", authMiddleware, deleteUser);
 
-router.put("/:id", updateUser);
+router.put("/:id", authMiddleware, updateUser);
 
 router.post("/login", login);
 

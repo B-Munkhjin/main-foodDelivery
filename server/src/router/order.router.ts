@@ -11,12 +11,12 @@ const router = express.Router();
 
 router.get("/", authMiddleware, adminMiddleware, getOrder);
 
-router.get("/:id", getOrderById);
+router.get("/:id", authMiddleware, getOrderById);
 
 router.post("/", authMiddleware, addOrder);
 
-router.delete("/:id", deleteOrder);
+router.delete("/:id", authMiddleware, deleteOrder);
 
-router.patch("/:id", updateOrder);
+router.patch("/:id", authMiddleware, updateOrder);
 
 export default router;

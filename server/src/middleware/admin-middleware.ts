@@ -1,3 +1,4 @@
+//admin mon eseh shalgalt (adminaar nevtersen eseh)
 import { NextFunction, Request, Response } from "express";
 
 export const adminMiddleware = (
