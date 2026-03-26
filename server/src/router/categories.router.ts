@@ -9,11 +9,11 @@ import { adminMiddleware } from "../middleware/admin-middleware";
 
 const router = express();
 
-router.get("/", authMiddleware, getCategories);
+router.get("/", getCategories);
 
 router.get("/:id", authMiddleware, getCategoriesById);
 
-router.post("/", authMiddleware, adminMiddleware, addCategory);
+router.post("/", addCategory);
 
 router.delete("/:id", authMiddleware, adminMiddleware, deleteCategory);
 

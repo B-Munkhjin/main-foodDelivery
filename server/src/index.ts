@@ -4,6 +4,7 @@ import usersRouter from "./router/users.router";
 import foodsRouter from "./router/foods.router";
 import categoriesRouter from "./router/categories.router";
 import orderRouter from "./router/order.router";
+import cors from "cors";
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
+app.use(cors());
 app.use("/users", usersRouter);
 
 ////categories
