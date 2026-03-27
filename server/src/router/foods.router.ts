@@ -9,11 +9,11 @@ import { adminMiddleware } from "../middleware/admin-middleware";
 
 const router = express();
 
-router.get("/", authMiddleware, getFoods);
+router.get("/", getFoods);
 
 router.get("/:id", authMiddleware, getFoodById);
 
-router.post("/", authMiddleware, adminMiddleware, addFoods);
+router.post("/", addFoods);
 
 router.delete("/:id", authMiddleware, adminMiddleware, deleteFood);
 
