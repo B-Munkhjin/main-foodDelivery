@@ -11,12 +11,12 @@ const router = express();
 
 router.get("/", getFoods);
 
-router.get("/:id", authMiddleware, getFoodById);
+router.get("/:id", getFoodById);
 
 router.post("/", addFoods);
 
-router.delete("/:id", authMiddleware, adminMiddleware, deleteFood);
+router.delete("/:id", deleteFood);
 
-router.put("/:id", authMiddleware, adminMiddleware, updateFood);
+router.put("/:id", updateFood);
 
 export default router;

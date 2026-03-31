@@ -10,15 +10,15 @@ import { authMiddleware } from "../middleware/auth-middleware";
 
 const router = express();
 
-router.get("/", authMiddleware, adminMiddleware, getUsers);
+router.get("/", getUsers);
 
-router.get("/:id", authMiddleware, getUserById);
+router.get("/:id", getUserById);
 
 router.post("/", addUser);
 
-router.delete("/:id", authMiddleware, deleteUser);
+router.delete("/:id", deleteUser);
 
-router.put("/:id", authMiddleware, updateUser);
+router.put("/:id", updateUser);
 
 router.post("/login", login);
 

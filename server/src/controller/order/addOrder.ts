@@ -9,9 +9,9 @@ type BodyType = {
 };
 
 export const addOrder = async (req: Request, res: Response) => {
-  const userId = req.user?.userId!;
+  // const userId = req.user?.userId!;
 
-  const { foods }: BodyType = req.body;
+  const { foods, userId }: BodyType = req.body;
 
   try {
     const ids = foods.map((food) => food.foodId); /// hooloo id-gaar avah.... ali hool ve gedgee medne
@@ -31,7 +31,7 @@ export const addOrder = async (req: Request, res: Response) => {
 
     const order = await prisma.foodOrder.create({
       data: {
-        userId,
+        userId: userId,
         totalPrice,
         foodOrderItems: {
           create: foods,
@@ -51,5 +51,6 @@ export const addOrder = async (req: Request, res: Response) => {
     res.json({ order, orderItems });
   } catch (error) {
     res.send(error);
+    console.log(error);
   }
 };

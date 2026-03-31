@@ -15,6 +15,7 @@ export const addFoods = async (req: Request, res: Response) => {
     });
     res.json({ foods });
   } catch (error) {
+    console.log(error);
     res.send(error);
   }
 };

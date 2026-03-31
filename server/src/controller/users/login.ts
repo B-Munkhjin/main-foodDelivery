@@ -7,6 +7,7 @@ import { error } from "node:console";
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const secret = process.env.SECRET;
+
   try {
     if (!secret) return;
 

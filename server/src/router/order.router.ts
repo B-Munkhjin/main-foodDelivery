@@ -9,14 +9,14 @@ import { adminMiddleware } from "../middleware/admin-middleware";
 
 const router = express.Router();
 
-router.get("/", authMiddleware, adminMiddleware, getOrder);
+router.get("/", getOrder);
 
-router.get("/:id", authMiddleware, getOrderById);
+router.get("/:id", getOrderById);
 
-router.post("/", authMiddleware, addOrder);
+router.post("/", addOrder);
 
-router.delete("/:id", authMiddleware, deleteOrder);
+router.delete("/:id", deleteOrder);
 
-router.patch("/:id", authMiddleware, updateOrder);
+router.patch("/:id", updateOrder);
 
 export default router;

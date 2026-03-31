@@ -24,13 +24,12 @@ model User {
   id        Int      @id @default(autoincrement())
 
   email     String   @unique
-  name      String?
-  phoneNumber String
+  phoneNumber String?
   role UserRoleEnum @default(USER)
 
   orders FoodOrder[]
   password String
-  address String
+  address String?
   isVerified Boolean?
   }
 
