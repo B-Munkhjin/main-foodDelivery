@@ -7,6 +7,7 @@ import { deleteUser } from "../controller/users/delete-user";
 import { login } from "../controller/users/login";
 import { adminMiddleware } from "../middleware/admin-middleware";
 import { authMiddleware } from "../middleware/auth-middleware";
+import { me } from "../controller/users/me";
 
 const router = express();
 
@@ -21,5 +22,7 @@ router.delete("/:id", deleteUser);
 router.put("/:id", updateUser);
 
 router.post("/login", login);
+
+router.get("/me", authMiddleware, me);
 
 export default router;
