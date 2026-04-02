@@ -18,7 +18,11 @@ export const login = async (req: Request, res: Response) => {
     });
 
     if (!userByEmail) {
-      res.status(404).json({ message: "user not found." });
+      res.status(404).json({ message: "User not found." });
+      return;
+    }
+    if (!userByEmail.password) {
+      res.status(404).json({ message: "Password is incorrect." });
       return;
     }
     const match = await bcrypt.compare(password, userByEmail.password); ///enni daraalal chuhal!!!
