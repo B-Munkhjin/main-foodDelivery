@@ -26,7 +26,7 @@ export const addOrder = async (req: Request, res: Response) => {
     const totalPrice = foods.reduce((acc, curr) => {
       const food = getFoodIdArray.find((f: any) => f.id === curr.foodId);
       if (!food) return acc;
-      return acc + food.price * curr.quantity; ///total price nemj bn
+      return acc + food.price * curr.quantity;
     }, 0);
 
     const order = await prisma.foodOrder.create({
