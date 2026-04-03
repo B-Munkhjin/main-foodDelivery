@@ -1,8 +1,8 @@
+import { Suspense } from "react";
 import { Payment, columns } from "./Columns";
 import { DataTable } from "./DataTable";
 
 async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
   return [
     {
       id: "728ed52f",
@@ -18,7 +18,9 @@ export default async function GetOrdersPage() {
 
   return (
     <div className="container mt-20 w-full">
-      <DataTable columns={columns} data={data} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <DataTable columns={columns} data={data} />
+      </Suspense>
     </div>
   );
 }
