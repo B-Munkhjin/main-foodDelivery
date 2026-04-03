@@ -5,11 +5,10 @@ const prisma_1 = require("../../lib/prisma");
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, email, phoneNumber } = req.body;
+        const { email, phoneNumber } = req.body;
         await prisma_1.prisma.user.update({
             where: { id: Number(id) },
             data: {
-                name,
                 email,
                 phoneNumber,
             },
