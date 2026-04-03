@@ -1,87 +1,73 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  // url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
-
 enum UserRoleEnum {
-  USER 
-  ADMIN 
+  USER
+  ADMIN
+}
+
+enum FoodOrderStatusEnum {
+  PENDING
+  CANCELED
+  DELIVERED
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-
-  email     String   @unique
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
   phoneNumber String?
-  role UserRoleEnum @default(USER)
-
-  orders FoodOrder[]
-  password String
-  address String?
-  isVerified Boolean?
-  }
-
-model Food{
-  id Int @id @default(autoincrement())
-  name String 
-  price Int
-  
-  image String
-  ingredients String
-  category FoodCategory @relation(fields:[foodCategoryId], references: [id])
-
-  foodCategoryId Int
-  foodOrderItems FoodOrderItem[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role        UserRoleEnum @default(USER)
+  password    String
+  address     String?
+  isVerified  Boolean?
+  orders      FoodOrder[]
 }
 
-model FoodCategory{
-  id Int @id @default(autoincrement())
-  name      String?
-  foods Food[]
+model Food {
+  id             Int             @id @default(autoincrement())
+  name           String
+  price          Int
+  image          String
+  ingredients    String
+  foodCategoryId Int
+  category       FoodCategory    @relation(fields: [foodCategoryId], references: [id])
+  foodOrderItems FoodOrderItem[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
 
+model FoodCategory {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  foods     Food[]
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
 
-model FoodOrder{
-  id Int @id @default(autoincrement())
-  userId Int
-  user User @relation(fields:[userId], references: [id])
-
-  totalPrice Int
-  status FoodOrderStatusEnum @default(PENDING)
+model FoodOrder {
+  id             Int                 @id @default(autoincrement())
+  userId         Int
+  totalPrice     Int
+  status         FoodOrderStatusEnum @default(PENDING)
+  user           User                @relation(fields: [userId], references: [id])
   foodOrderItems FoodOrderItem[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
 }
 
-model FoodOrderItem{
-  id Int @id @default(autoincrement())
-  quantity Int
-  food Food @relation(fields:[foodId], references: [id])
-  foodId Int
-  order FoodOrder @relation(fields:[foodOrderId], references: [id])
+model FoodOrderItem {
+  id          Int       @id @default(autoincrement())
+  quantity    Int
+  foodId      Int
   foodOrderId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-enum FoodOrderStatusEnum {
-  PENDING 
-  CANCELED
-  DELIVERED
+  food        Food      @relation(fields: [foodId], references: [id])
+  order       FoodOrder @relation(fields: [foodOrderId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
