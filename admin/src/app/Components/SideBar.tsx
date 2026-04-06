@@ -62,10 +62,6 @@ export const AdminSideBar = () => {
             </Button>
           </SidebarContent>
         </Sidebar>
-        {/* <div className="">
-          <DishesCategory />
-          <AddFood />
-        </div> */}
       </SidebarProvider>
     </div>
   );

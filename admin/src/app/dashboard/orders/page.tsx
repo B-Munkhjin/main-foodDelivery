@@ -6,7 +6,7 @@ import GetOrdersPage from "@/app/Components/GetOrders/page";
 
 export default function Home() {
   return (
-    <div className="font-inter w-full bg-[#f4f4f5]">
+    <div className="font-inter w-full bg-[#f4f4f5] rounded-2xl px-10 pt-0 mt-0">
       <GetOrdersPage />
     </div>
   );

@@ -41,7 +41,7 @@ export function AddFood(categoryId: CategoryId) {
     price: 0,
     ingredients: "",
     foodCategoryId: categoryId.categoryId,
-    image: "",
+    image: "http",
   });
   const [loading, setLoading] = useState<boolean>(false);
 

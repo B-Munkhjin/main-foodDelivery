@@ -40,7 +40,7 @@ const SignIn = () => {
       router.push("/dashboard/foods");
     } catch (err) {
       setError("Burtgelgui hereglegch esvel password buruu bn!");
-      console.error(error);
+      // console.error(error);
     }
   };
 

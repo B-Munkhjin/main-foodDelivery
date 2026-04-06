@@ -56,6 +56,10 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
+  // const dataCategory = await fetch("http://localhost:3001/categories");
+  // const dataUser = await fetch("http://localhost:3001/users");
+  // const { users }: GetUsersResponse = await dataUser.json();
+  // const { categories }: GetCategoriesResponse = await dataCategory.json();
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
 
@@ -100,7 +104,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center pb-4">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -182,7 +186,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
 
-      <div className="flex items-center justify-center py-4">
+      <div className="flex items-center py-4">
         <Pagination>
           <PaginationContent>
             <PaginationItem>
@@ -210,7 +214,6 @@ export function DataTable<TData, TValue>({
               </PaginationItem>
             )}
 
-            {/* Next Button */}
             <PaginationItem>
               <PaginationNext
                 href={`?page=${Math.min(totalPages, currentPage + 1)}`}

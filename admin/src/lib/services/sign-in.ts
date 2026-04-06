@@ -10,7 +10,7 @@ type SignInResponse = {
 };
 
 export const signIn = async (credentials: Credentials) => {
-  const response = await fetch("/auth", {
+  const response = await fetch("/api/auth", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
