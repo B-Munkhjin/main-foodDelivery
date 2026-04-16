@@ -8,41 +8,36 @@ export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const secret = process.env.SECRET;
 
+  console.log("Нэвтрэх хүсэлт ирлээ:", email);
   try {
-    if (!secret) return;
+    if (!secret) {
+      console.error("SECRET олдохгүй байна!");
+      return res.status(500).json({ message: "Server SECRET missing" });
+    }
 
-    const userByEmail = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
+    const userByEmail = await prisma.user.findUnique({ where: { email } });
 
     if (!userByEmail) {
-      res.status(404).json({ message: "User not found." });
-      return;
+      return res.status(404).json({ message: "Хэрэглэгч олдсонгүй" });
     }
-    if (!userByEmail.password) {
-      res.status(404).json({ message: "Password is incorrect." });
-      return;
-    }
-    const match = await bcrypt.compare(password, userByEmail.password); ///enni daraalal chuhal!!!
+    const match = await bcrypt.compare(
+      password,
+      userByEmail.password as string,
+    );
 
-    if (match === true) {
-      const token = jwt.sign(
-        {
-          data: {
-            userId: userByEmail.id,
-            email: userByEmail.email,
-            role: userByEmail.role,
-          },
-        },
-        secret,
-        { expiresIn: "1h" },
-      );
-      res.status(200).send({ token });
+    if (!match) {
+      return res.status(401).json({ message: "Нууц үг буруу" });
     }
-  } catch (error) {
-    res.status(500).json({ message: "buruu" });
-    console.error(error);
+
+    const token = jwt.sign(
+      { data: { userId: userByEmail.id, email: userByEmail.email } },
+      secret,
+      { expiresIn: "1h" },
+    );
+
+    return res.status(200).json({ token });
+  } catch (error: any) {
+    console.error("БАКЕНД ДЭЭР АЛДАА ГАРЛАА:", error.message);
+    return res.status(500).json({ message: error.message });
   }
 };

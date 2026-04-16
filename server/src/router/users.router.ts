@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import { getUsers } from "../controller/users/get-users";
 import { getUserById } from "../controller/users/get-userById";
 import { addUser } from "../controller/users/add-user";
@@ -9,7 +9,7 @@ import { adminMiddleware } from "../middleware/admin-middleware";
 import { authMiddleware } from "../middleware/auth-middleware";
 import { me } from "../controller/users/me";
 
-const router = express();
+const router = Router();
 
 router.get("/", getUsers);
 

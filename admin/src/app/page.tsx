@@ -29,28 +29,19 @@ const SignIn = () => {
   const onSubmit = async () => {
     setError("");
     const credentials = { email, password };
-    try {
-      const response = await signIn(credentials);
-      const errorMessage = await response.json();
 
-      if (response.status !== 200) {
-        setError(errorMessage.message);
-        return;
-      }
+    try {
+      await signIn(credentials);
+
       router.push("/dashboard/foods");
-    } catch (err) {
-      setError("Burtgelgui hereglegch esvel password buruu bn!");
-      // console.error(error);
+    } catch (err: any) {
+      setError(err.message || "Burtgelgui hereglegch esvel password buruu bn!");
     }
   };
 
   return (
     <div className="flex justify-between w-full h-full items-center">
       <div className="flex flex-col w-104 gap-6 ml-30">
-        <Button className="size-9 justify-center items-center bg-[#FFFFFF] border border-[#E4E4E7] rounded-md text-black">
-          <ChevronLeft />
-        </Button>
-
         <div className="h-15 gap-1 flex flex-col justify-start">
           <h1 className="font-semibold text-2xl text-[#09090B]">Log in </h1>
           <p className=" text-base text-[#71717A]">

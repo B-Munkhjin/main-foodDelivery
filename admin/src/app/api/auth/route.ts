@@ -1,11 +1,5 @@
-// ///tsaashaa web dre hadgalah bish cookie-d buyu oordeeree, server dre hadgalj bna
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
-type SignInResponse = {
-  token: string;
-  message?: string;
-};
 
 export async function POST(request: Request) {
   try {
@@ -18,17 +12,36 @@ export async function POST(request: Request) {
       body: JSON.stringify(credentials),
     });
 
-    const data = (await response.json()) as SignInResponse;
-    cookieStore.set("token", data.token);
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      const errorText = await response.text();
+      console.error("Backend-ээс HTML ирлээ:", errorText);
+      return NextResponse.json(
+        { message: "Backend server error (HTML returned)" },
+        { status: 500 },
+      );
+    }
+
+    const data = await response.json();
+
     if (!response.ok) {
       return NextResponse.json(
-        { message: data.message },
+        { message: data.message || "Нэвтрэхэд алдаа гарлаа" },
         { status: response.status },
       );
     }
-    return NextResponse.json({ message: "logged in" });
+
+    cookieStore.set("token", data.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+    });
+
+    return NextResponse.json({ message: "Success" });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Server connection failed" },
+      { status: 500 },
+    );
   }
 }

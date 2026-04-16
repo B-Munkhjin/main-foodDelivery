@@ -1,8 +1,8 @@
 import { Suspense } from "react";
-import { Payment, columns } from "./Columns";
-import { DataTable } from "./DataTable";
-import { Button } from "@/components/ui/button";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,107 +11,81 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-export interface Category {
-  id: number;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  foods: Food[];
-}
 
-export interface Food {
-  id: number;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  price: string;
-  foodCategoryId: number;
-}
-export interface GetCategoriesResponse {
-  categories: Category[];
-}
-export interface GetUsersResponse {
-  users: User[];
-}
-
-export interface User {
-  id: number;
-  name?: string;
-  email: string;
-}
-
-async function getData(): Promise<Payment[]> {
-  return [
-    {
-      id: "728ed52f",
-      email: "m@example.com",
-      quantity: 100,
-      status: "Pending",
-    },
-  ];
+async function logout() {
+  "use server";
+  const cookieStore = await cookies();
+  cookieStore.delete("token");
+  redirect("/");
 }
 
 export default async function GetOrdersPage() {
-  const data = await getData();
-  const dataCategory = await fetch("http://localhost:3001/categories");
-  const dataUser = await fetch("http://localhost:3001/users");
-  const { users }: GetUsersResponse = await dataUser.json();
-  const { categories }: GetCategoriesResponse = await dataCategory.json();
+  let users = [];
+  let categories = [];
+
+  try {
+    const [resUser, resCategory] = await Promise.all([
+      fetch("http://localhost:3001/users", { cache: "no-store" }),
+      fetch("http://localhost:3001/categories", { cache: "no-store" }),
+    ]);
+
+    if (resUser.ok) {
+      const userData = await resUser.json();
+      users = userData.users || userData;
+    }
+
+    if (resCategory.ok) {
+      const catData = await resCategory.json();
+      categories = catData.categories || catData;
+    }
+  } catch (err) {
+    console.error("Fetch error:", err);
+  }
 
   return (
-    <div className="flex flex-col mt-20 w-full">
-      <div className="flex flex-end ml-490 relative bottom-15">
-        {users.map((user: any) => {
-          return (
+    <div className="flex flex-col mt-20 w-full p-8">
+      <div className="flex justify-end mb-4">
+        {users.length > 0 ? (
+          users.map((user: any) => (
             <DropdownMenu key={user.id}>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <Avatar>
-                    <AvatarImage
-                      src="https://github.com/shadcn.png"
-                      alt="shadcn"
-                    />
+                    <AvatarImage src="https://github.com/shadcn.png" />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-
-              <DropdownMenuContent className="w-fit mr-11">
+              <DropdownMenuContent className="w-56" align="end">
                 <DropdownMenuGroup>
-                  <DropdownMenuItem className="overflow-scroll ">
-                    {`Email:  ${user.email}`}
+                  <DropdownMenuItem className="truncate">
+                    Email: {user.email}
                   </DropdownMenuItem>
-                  <DropdownMenuItem>{`Role:  ${user.role}`}</DropdownMenuItem>
-                  {/* <DropdownMenuItem>Settings</DropdownMenuItem> */}
+                  <DropdownMenuItem>
+                    Role: {user.role || "User"}
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <form action={logout}>
-                    <button
-                      type="submit"
-                      className="w-full text-left text-red-500 px-2 py-1.5 text-sm rounded-sm hover:bg-accent"
-                    >
-                      Log out
-                    </button>
-                  </form>
-                </DropdownMenuGroup>
+                <form action={logout}>
+                  <button
+                    type="submit"
+                    className="w-full text-left text-red-500 px-2 py-1.5 text-sm hover:bg-slate-100"
+                  >
+                    Log out
+                  </button>
+                </form>
               </DropdownMenuContent>
             </DropdownMenu>
-          );
-        })}
+          ))
+        ) : (
+          <p>No users found</p>
+        )}
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <DataTable columns={columns} data={data} />
+
+      <Suspense fallback={<div>Loading Data Table...</div>}>
+        {/* DataTable-ээ энд дуудна */}
+        <div className="border p-4 rounded">Data Table Content Here</div>
       </Suspense>
     </div>
   );
-}
-
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-
-async function logout() {
-  "use server";
-  (await cookies()).delete("token");
-  redirect("/");
 }

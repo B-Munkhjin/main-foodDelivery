@@ -1,28 +1,23 @@
-import { NextResponse } from "next/server";
-
-type Credentials = {
-  email: string;
-  password: string;
-};
-type SignInResponse = {
-  token: string;
-  message?: string;
-};
-
-export const signIn = async (credentials: Credentials) => {
+export const signIn = async (credentials: any) => {
   const response = await fetch("/api/auth", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
   });
-  const data = (await response.json()) as SignInResponse;
+
+  const contentType = response.headers.get("content-type");
+
+  if (!contentType || !contentType.includes("application/json")) {
+    const errorText = await response.text();
+    console.error("Серверээс JSON биш хариу ирлээ:", errorText);
+    throw new Error("Сервертэй холбогдоход алдаа гарлаа (Invalid JSON)");
+  }
+
+  const data = await response.json();
 
   if (!response.ok) {
-    return NextResponse.json(
-      { message: data.message },
-      { status: response.status },
-    );
-  } else {
-    return NextResponse.json({ message: "logged in" });
+    throw new Error(data.message || "Алдаа гарлаа");
   }
+
+  return data;
 };

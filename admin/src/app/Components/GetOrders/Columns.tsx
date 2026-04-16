@@ -54,7 +54,6 @@ export const columns: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Customer
-          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
