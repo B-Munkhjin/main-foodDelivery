@@ -205,10 +205,10 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
   };
 
   return (
-    <div>
-      <div className="w-full mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="flex w-full relative top-5">
+      <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-50">
-          <div className="flex">
+          <div className="flex flex-col">
             <h1 className="text-xl font-bold text-gray-900">Orders</h1>
             <p className="text-sm text-zinc-500 font-medium">
               {orders.length} items
@@ -231,7 +231,7 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
               }}
             >
               <DialogTrigger>
-                <Button
+                <button
                   className="px-4 py-2 h-9 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center gap-2"
                   disabled={selectedIds.size === 0}
                 >
@@ -241,7 +241,7 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
                       {selectedIds.size}
                     </span>
                   )}
-                </Button>
+                </button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-105 p-8 rounded-xl border-none shadow-2xl">
                 <DialogHeader>
@@ -296,6 +296,7 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
                 <th className="px-4 py-4">№</th>
                 <th className="px-4 py-4">Customer</th>
                 <th className="px-4 py-4">Food</th>
+                <th className="px-4 py-4">Date</th>
                 <th className="px-4 py-4">Total</th>
                 <th className="px-4 py-4 text-right pr-10">Delivery state</th>
               </tr>
@@ -369,7 +370,10 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
                     </DropdownMenu>
                   </td>
                   <td className="px-4 py-4 font-bold text-zinc-500">
-                    ${order.totalPrice}
+                    {formatDate(order.createdAt)}
+                  </td>
+                  <td className="px-4 py-4 font-bold text-zinc-500">
+                    {order.totalPrice} &nbsp; ₮
                   </td>
                   <td className="px-4 py-4 text-right pr-6">
                     <div className="inline-block min-w-27.5">
