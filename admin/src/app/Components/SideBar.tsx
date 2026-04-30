@@ -28,7 +28,7 @@ export const AdminSideBar = () => {
       <SidebarProvider>
         <Sidebar className="flex justify-center w-51.25 bg-white">
           <div className="flex justify-center w-51.25 h-11 pr-5.25 gap-2 items-center relative top-9">
-            <img src="/logo.svg" className="size-9" />
+            <img src="/Logo.svg" className="size-9" />
             <div className="flex flex-col">
               <div className="text-lg font-semibold text-[#09090B]">NomNom</div>
               <div className="text-sm text-[#71717A]">Swift delivery</div>
