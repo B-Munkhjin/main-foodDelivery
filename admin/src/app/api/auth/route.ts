@@ -6,11 +6,14 @@ export async function POST(request: Request) {
     const credentials = await request.json();
     const cookieStore = await cookies();
 
-    const response = await fetch("http://localhost:3001/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
-    });
+    const response = await fetch(
+      "https://main-fooddelivery.onrender.com/users/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      },
+    );
 
     const contentType = response.headers.get("content-type");
     if (!contentType || !contentType.includes("application/json")) {

@@ -71,7 +71,9 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
       setLoading(true);
       try {
         console.log(orders);
-        const res = await fetch("http://localhost:3001/orders");
+        const res = await fetch(
+          "https://main-fooddelivery.onrender.com/orders",
+        );
         if (!res.ok) throw new Error(`Failed to load orders: ${res.status}`);
         const { orders: remote } = await res.json();
         if (!mounted) return;

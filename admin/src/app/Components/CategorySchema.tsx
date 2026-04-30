@@ -40,8 +40,10 @@ export interface Food {
 }
 
 export async function CategorySchema() {
-  const dataCategory = await fetch("http://localhost:3001/categories");
-  const dataUser = await fetch("http://localhost:3001/users");
+  const dataCategory = await fetch(
+    "https://main-fooddelivery.onrender.com/categories",
+  );
+  const dataUser = await fetch("https://main-fooddelivery.onrender.com/users");
   const { users }: GetUsersResponse = await dataUser.json();
   const { categories }: GetCategoriesResponse = await dataCategory.json();
 

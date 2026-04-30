@@ -18,11 +18,15 @@ type Categories = {
 };
 
 export async function FoodsContainer() {
-  const foodsResponse = await fetch("http://localhost:3001/foods");
+  const foodsResponse = await fetch(
+    "https://main-fooddelivery.onrender.com/foods",
+  );
 
   const { foods }: Foods = await foodsResponse.json();
 
-  const categoryResponse = await fetch("http://localhost:3001/categories");
+  const categoryResponse = await fetch(
+    "https://main-fooddelivery.onrender.com/categories",
+  );
   const { categories }: Categories = await categoryResponse.json();
   return (
     <div className="flex flex-col">
