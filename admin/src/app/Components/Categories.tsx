@@ -60,7 +60,7 @@ export function DishesCategory() {
     };
 
     try {
-      await fetch("http://localhost:3001/categories", {
+      await fetch("https://main-fooddelivery.onrender.com/categories", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

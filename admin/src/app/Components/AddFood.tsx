@@ -52,7 +52,7 @@ export function AddFood(categoryId: CategoryId) {
   const onAddFood = async (): Promise<void> => {
     setLoading(true);
     try {
-      await fetch("http://localhost:3001/foods", {
+      await fetch("https://main-fooddelivery.onrender.com/foods", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

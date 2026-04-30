@@ -1,9 +1,12 @@
 export const signIn = async (credentials: any) => {
-  const response = await fetch("/api/auth", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(credentials),
-  });
+  const response = await fetch(
+    "https://main-fooddelivery.onrender.com/api/auth",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    },
+  );
 
   const contentType = response.headers.get("content-type");
 

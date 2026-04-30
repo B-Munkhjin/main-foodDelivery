@@ -74,7 +74,7 @@ function EditFoodDialog({ foodData }: { foodData: Food }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3001/foods/${editedFood.id}`,
+        `https://main-fooddelivery.onrender.com/foods/${editedFood.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
