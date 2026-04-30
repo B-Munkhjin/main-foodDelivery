@@ -16,6 +16,11 @@ export const signIn = async (credentials: any) => {
     throw new Error("Сервертэй холбогдоход алдаа гарлаа (Invalid JSON)");
   }
 
+  if (!response.ok) {
+    if (response.status === 404)
+      throw new Error("The login endpoint was not found (404).");
+    throw new Error(`Server error: ${response.status}`);
+  }
   const data = await response.json();
 
   if (!response.ok) {
