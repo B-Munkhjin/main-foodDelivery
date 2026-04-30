@@ -2,6 +2,7 @@ import { AddFood } from "@/app/Components/AddFood";
 import { DishesCategory } from "@/app/Components/Categories";
 import { CategorySchema } from "@/app/Components/CategorySchema";
 import { FoodsContainer } from "@/app/Components/foodsContainer";
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (

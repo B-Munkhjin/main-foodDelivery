@@ -205,7 +205,7 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
   };
 
   return (
-    <div className="flex w-full relative top-5">
+    <div className="w-full p-6">
       <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-50">
           <div className="flex flex-col">
@@ -345,7 +345,7 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
                               {item.food.image ? (
                                 <img
                                   src={item.food.image}
-                                  alt={item.food.foodName || "Food image"}
+                                  alt={item.food.foodName}
                                   className="w-10 h-10 rounded-lg object-cover bg-gray-100"
                                 />
                               ) : (
@@ -357,9 +357,9 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
                                   ></img>
                                 </div>
                               )}
-                              <span className="text-sm font-medium text-black ">
-                                {item.food.foodName}
-                              </span>
+                            </div>
+                            <div className="text-sm font-medium text-black">
+                              {item.food.foodName}
                             </div>
                             <span className="text-sm text-gray-400 ">
                               x {item.quantity}

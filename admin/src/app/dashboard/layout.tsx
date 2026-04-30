@@ -1,10 +1,5 @@
 import { AdminSideBar } from "@/app/Components/SideBar";
-import {
-  Sidebar,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { Link } from "lucide-react";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
   children,
@@ -12,11 +7,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-      <SidebarProvider>
-        <AdminSideBar />
-        <main>{children}</main>
-      </SidebarProvider>
-    </div>
+    <SidebarProvider>
+      <AdminSideBar />
+      <SidebarInset className="w-full min-w-0">{children}</SidebarInset>
+    </SidebarProvider>
   );
 }
