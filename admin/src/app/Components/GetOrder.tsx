@@ -323,15 +323,15 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
                     />
                   </td>
                   <td className="px-4 py-4 text-black font-mono">{idx + 1}</td>
-                  <td className="px-4 py-4 font-semibold text-zinc-500">
+                  <td className="px-4 py-4 font-semibold ">
                     {order.user.email}
                   </td>
                   <td className="px-4 py-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <button className="flex items-center gap-2 font-medium text-gray-600 outline-none">
+                        <button className="flex gap-2 justify-around font-medium items-center">
                           {order.foodOrderItems.length}
-                          <ChevronDown size={14} className="text-zinc-400" />
+                          <ChevronDown size={14} className="" />
                         </button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
@@ -363,22 +363,20 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
                             <div className="text-sm font-medium text-black">
                               {item.food.foodName}
                             </div>
-                            <span className="text-sm text-gray-400 ">
-                              x {item.quantity}
-                            </span>
+                            <span className="text-sm ">x {item.quantity}</span>
                           </div>
                         ))}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </td>
-                  <td className="px-4 py-4 font-bold text-zinc-500">
+                  <td className="px-4 py-4 font-bold ">
                     {formatDate(order.createdAt)}
                   </td>
-                  <td className="px-4 py-4 font-bold text-zinc-500">
+                  <td className="px-4 py-4 font-bold ">
                     {order.totalPrice} &nbsp; ₮
                   </td>
-                  <td className="px-4 py-4 text-right pr-6">
-                    <div className="inline-block min-w-27.5">
+                  <td className=" py-4 text-right px-6">
+                    <div className="inline-block px-2">
                       <select
                         value={order.status}
                         onChange={(e) =>
@@ -388,7 +386,7 @@ export default function GetOrders({ initialOrders }: OrdersTableProps) {
                           )
                         }
                         className={cn(
-                          "h-8 rounded-full text-[11px] font-bold border px-4 w-full  bg-white cursor-pointer",
+                          "h-8 rounded-full text-[11px] font-bold border px-2 w-full  bg-white cursor-pointer ",
                           getStatusStyles(order.status),
                         )}
                       >
